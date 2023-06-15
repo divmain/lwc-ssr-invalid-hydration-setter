@@ -1,5 +1,5 @@
 diff --git a/node_modules/@lwc/engine-dom/dist/index.cjs.js b/node_modules/@lwc/engine-dom/dist/index.cjs.js
-index 6cc2328..addba88 100644
+index 6cc2328..66e80b8 100644
 --- a/node_modules/@lwc/engine-dom/dist/index.cjs.js
 +++ b/node_modules/@lwc/engine-dom/dist/index.cjs.js
 @@ -4187,6 +4187,7 @@ function mountStatic(vnode, parent, anchor, renderer) {
@@ -19,3 +19,19 @@ index 6cc2328..addba88 100644
      if (isNull(oldVnode)) {
          applyEventListeners(vnode, renderer);
          applyStaticClassAttribute(vnode, renderer);
+@@ -6784,6 +6787,7 @@ function hydrateCustomElement(elm, vnode, renderer) {
+     //
+     // Therefore, if validationOptOut is falsey or an array of strings, we need to
+     // examine some or all of the custom element's attributes.
++    console.log('client: validating that SSRd markup matches CSR VDOM');
+     if (!hasCorrectNodeType(vnode, elm, 1 /* EnvNodeTypes.ELEMENT */, renderer) ||
+         !isMatchingElement(vnode, elm, renderer, shouldValidateAttr)) {
+         return handleMismatch(elm, vnode, renderer);
+@@ -6930,6 +6934,7 @@ function validateAttrs(vnode, elm, renderer, shouldValidateAttr) {
+     return nodesAreCompatible;
+ }
+ function validateClassAttr(vnode, elm, renderer) {
++    console.log('client: checking to see if CSR class attr matches attr in SSR markup');
+     const { data, owner } = vnode;
+     let { className, classMap } = data;
+     const { getProperty, getClassList, getAttribute } = renderer;
