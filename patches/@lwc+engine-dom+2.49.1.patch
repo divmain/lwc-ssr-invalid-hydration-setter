@@ -1,0 +1,21 @@
+diff --git a/node_modules/@lwc/engine-dom/dist/index.cjs.js b/node_modules/@lwc/engine-dom/dist/index.cjs.js
+index 6cc2328..addba88 100644
+--- a/node_modules/@lwc/engine-dom/dist/index.cjs.js
++++ b/node_modules/@lwc/engine-dom/dist/index.cjs.js
+@@ -4187,6 +4187,7 @@ function mountStatic(vnode, parent, anchor, renderer) {
+ function mountCustomElement(vnode, parent, anchor, renderer) {
+     const { sel, owner } = vnode;
+     const { createCustomElement } = renderer;
++    console.log(`client: mounting <${sel}>`);
+     /**
+      * Note: if the upgradable constructor does not expect, or throw when we new it
+      * with a callback as the first argument, we could implement a more advanced
+@@ -4401,6 +4402,8 @@ function removeNode(node, parent, renderer) {
+     }
+ }
+ function patchElementPropsAndAttrs$1(oldVnode, vnode, renderer) {
++    console.log(`client: patching props for <${vnode.sel}>`);
++
+     if (isNull(oldVnode)) {
+         applyEventListeners(vnode, renderer);
+         applyStaticClassAttribute(vnode, renderer);

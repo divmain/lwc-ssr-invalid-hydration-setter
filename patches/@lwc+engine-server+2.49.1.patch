@@ -1,0 +1,45 @@
+diff --git a/node_modules/@lwc/engine-server/dist/index.cjs.js b/node_modules/@lwc/engine-server/dist/index.cjs.js
+index 47bfe47..006313a 100644
+--- a/node_modules/@lwc/engine-server/dist/index.cjs.js
++++ b/node_modules/@lwc/engine-server/dist/index.cjs.js
+@@ -3936,6 +3936,8 @@ function mountStatic(vnode, parent, anchor, renderer) {
+ function mountCustomElement(vnode, parent, anchor, renderer) {
+     const { sel, owner } = vnode;
+     const { createCustomElement } = renderer;
++
++    console.log(`server: mounting <${sel}>`);
+     /**
+      * Note: if the upgradable constructor does not expect, or throw when we new it
+      * with a callback as the first argument, we could implement a more advanced
+@@ -3962,6 +3964,7 @@ function mountCustomElement(vnode, parent, anchor, renderer) {
+     // compiler may generate tagnames with uppercase letters so - for backwards
+     // compatibility, we lower case the tagname here.
+     const normalizedTagname = sel.toLowerCase();
++    console.log(`server: creating a HostElement for <${sel}> from VDOM`);
+     const elm = createCustomElement(normalizedTagname, upgradeCallback, connectedCallback, disconnectedCallback);
+     vnode.elm = elm;
+     vnode.vm = vm;
+@@ -4145,6 +4148,7 @@ function removeNode(node, parent, renderer) {
+     }
+ }
+ function patchElementPropsAndAttrs$1(oldVnode, vnode, renderer) {
++    console.log(`server: patching props for <${vnode.sel}>`);
+     if (isNull(oldVnode)) {
+         applyEventListeners(vnode, renderer);
+         applyStaticClassAttribute(vnode, renderer);
+@@ -14467,6 +14471,7 @@ const FakeRootElement = {
+     [HostContextProvidersKey]: new Map(),
+ };
+ function renderComponent(tagName, Ctor, props = {}) {
++    console.log('server: renderComponent is invoked');
+     if (!isString(tagName)) {
+         throw new TypeError(`"renderComponent" expects a string as the first parameter but instead received ${tagName}.`);
+     }
+@@ -14487,6 +14492,7 @@ function renderComponent(tagName, Ctor, props = {}) {
+     }
+     element[HostParentKey] = FakeRootElement;
+     connectRootElement(element);
++    console.log('server: serializing root HostElement to markup');
+     return serializeElement(element);
+ }
+ 
