@@ -1,3 +1,39 @@
+diff --git a/node_modules/@lwc/engine-dom/dist/engine-dom.js b/node_modules/@lwc/engine-dom/dist/engine-dom.js
+index 5a51275..d1c98c5 100644
+--- a/node_modules/@lwc/engine-dom/dist/engine-dom.js
++++ b/node_modules/@lwc/engine-dom/dist/engine-dom.js
+@@ -4183,6 +4183,7 @@ function mountStatic(vnode, parent, anchor, renderer) {
+ function mountCustomElement(vnode, parent, anchor, renderer) {
+     const { sel, owner } = vnode;
+     const { createCustomElement } = renderer;
++    console.log(`client: mounting <${sel}>`);
+     /**
+      * Note: if the upgradable constructor does not expect, or throw when we new it
+      * with a callback as the first argument, we could implement a more advanced
+@@ -4397,6 +4398,7 @@ function removeNode(node, parent, renderer) {
+     }
+ }
+ function patchElementPropsAndAttrs$1(oldVnode, vnode, renderer) {
++    console.log(`client: patching props for <${vnode.sel}>`);
+     if (isNull(oldVnode)) {
+         applyEventListeners(vnode, renderer);
+         applyStaticClassAttribute(vnode, renderer);
+@@ -6780,6 +6782,7 @@ function hydrateCustomElement(elm, vnode, renderer) {
+     //
+     // Therefore, if validationOptOut is falsey or an array of strings, we need to
+     // examine some or all of the custom element's attributes.
++    console.log('client: validating that SSRd markup matches CSR VDOM');
+     if (!hasCorrectNodeType(vnode, elm, 1 /* EnvNodeTypes.ELEMENT */, renderer) ||
+         !isMatchingElement(vnode, elm, renderer, shouldValidateAttr)) {
+         return handleMismatch(elm, vnode, renderer);
+@@ -6926,6 +6929,7 @@ function validateAttrs(vnode, elm, renderer, shouldValidateAttr) {
+     return nodesAreCompatible;
+ }
+ function validateClassAttr(vnode, elm, renderer) {
++    console.log('client: checking to see if CSR class attr matches attr in SSR markup');
+     const { data, owner } = vnode;
+     let { className, classMap } = data;
+     const { getProperty, getClassList, getAttribute } = renderer;
 diff --git a/node_modules/@lwc/engine-dom/dist/index.cjs.js b/node_modules/@lwc/engine-dom/dist/index.cjs.js
 index 6cc2328..66e80b8 100644
 --- a/node_modules/@lwc/engine-dom/dist/index.cjs.js
@@ -28,6 +64,43 @@ index 6cc2328..66e80b8 100644
          !isMatchingElement(vnode, elm, renderer, shouldValidateAttr)) {
          return handleMismatch(elm, vnode, renderer);
 @@ -6930,6 +6934,7 @@ function validateAttrs(vnode, elm, renderer, shouldValidateAttr) {
+     return nodesAreCompatible;
+ }
+ function validateClassAttr(vnode, elm, renderer) {
++    console.log('client: checking to see if CSR class attr matches attr in SSR markup');
+     const { data, owner } = vnode;
+     let { className, classMap } = data;
+     const { getProperty, getClassList, getAttribute } = renderer;
+diff --git a/node_modules/@lwc/engine-dom/dist/index.js b/node_modules/@lwc/engine-dom/dist/index.js
+index 5a51275..31276bb 100644
+--- a/node_modules/@lwc/engine-dom/dist/index.js
++++ b/node_modules/@lwc/engine-dom/dist/index.js
+@@ -4183,6 +4183,7 @@ function mountStatic(vnode, parent, anchor, renderer) {
+ function mountCustomElement(vnode, parent, anchor, renderer) {
+     const { sel, owner } = vnode;
+     const { createCustomElement } = renderer;
++    console.log(`client: mounting <${sel}>`);
+     /**
+      * Note: if the upgradable constructor does not expect, or throw when we new it
+      * with a callback as the first argument, we could implement a more advanced
+@@ -4397,6 +4398,8 @@ function removeNode(node, parent, renderer) {
+     }
+ }
+ function patchElementPropsAndAttrs$1(oldVnode, vnode, renderer) {
++    console.log(`client: patching props for <${vnode.sel}>`);
++    
+     if (isNull(oldVnode)) {
+         applyEventListeners(vnode, renderer);
+         applyStaticClassAttribute(vnode, renderer);
+@@ -6780,6 +6783,7 @@ function hydrateCustomElement(elm, vnode, renderer) {
+     //
+     // Therefore, if validationOptOut is falsey or an array of strings, we need to
+     // examine some or all of the custom element's attributes.
++    console.log('client: validating that SSRd markup matches CSR VDOM');
+     if (!hasCorrectNodeType(vnode, elm, 1 /* EnvNodeTypes.ELEMENT */, renderer) ||
+         !isMatchingElement(vnode, elm, renderer, shouldValidateAttr)) {
+         return handleMismatch(elm, vnode, renderer);
+@@ -6926,6 +6930,7 @@ function validateAttrs(vnode, elm, renderer, shouldValidateAttr) {
      return nodesAreCompatible;
  }
  function validateClassAttr(vnode, elm, renderer) {
